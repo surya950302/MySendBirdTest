@@ -298,6 +298,8 @@ public class GroupChatFragment extends Fragment {
                     mChatAdapter.markAllMessagesAsRead();
                     // Add new message to view
                     mChatAdapter.addFirst(baseMessage);
+                }else{
+                    // this is where sendNotification method should be called
                 }
             }
 

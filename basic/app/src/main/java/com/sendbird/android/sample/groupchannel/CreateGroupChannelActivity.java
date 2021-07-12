@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.sendbird.android.GroupChannel;
+import com.sendbird.android.GroupChannelParams;
 import com.sendbird.android.SendBirdException;
 import com.sendbird.android.sample.R;
 import com.sendbird.android.sample.utils.PreferenceUtils;
@@ -155,7 +156,7 @@ public class CreateGroupChannelActivity extends AppCompatActivity
      *                  If you attempt to create another Distinct channel with the same members,
      *                  the existing channel instance will be returned.
      */
-    private void createGroupChannel(List<String> userIds, boolean distinct) {
+    /*private void createGroupChannel(List<String> userIds, boolean distinct) {
         GroupChannel.createChannelWithUserIds(userIds, distinct, new GroupChannel.GroupChannelCreateHandler() {
             @Override
             public void onResult(GroupChannel groupChannel, SendBirdException e) {
@@ -170,7 +171,27 @@ public class CreateGroupChannelActivity extends AppCompatActivity
                 finish();
             }
         });
-    }
+    }*/
+    private void createGroupChannel(List<String> userIds, boolean distinct){
+        GroupChannelParams params = new GroupChannelParams()
+                .addUserIds(userIds)
+                .setDistinct(distinct)
+                .setCustomType("Suryanarayan");
+        GroupChannel.createChannel(params, new GroupChannel.GroupChannelCreateHandler(){
 
+            @Override
+            public void onResult(GroupChannel groupChannel, SendBirdException e) {
+                if (e != null) {
+                    // Error!
+                    return;
+                }
+                Intent intent = new Intent();
+                intent.putExtra(EXTRA_NEW_CHANNEL_URL, groupChannel.getUrl());
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+
+    }
 
 }

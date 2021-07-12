@@ -64,6 +64,26 @@ public class MyFirebaseMessagingService extends SendBirdPushHandler {
     public void onNewToken(String token) {
         Log.i(TAG, "onNewToken(" + token + ")");
         pushToken.set(token);
+        // Register a registration token to Sendbird server.
+        /*SendBird.registerPushTokenForCurrentUser(token, new SendBird.RegisterPushTokenWithStatusHandler() {
+            @Override
+            public void onRegistered(SendBird.PushTokenRegistrationStatus ptrs, SendBirdException e) {
+                if (e != null) {
+                    // Handle error.
+                }
+
+                if (ptrs == SendBird.PushTokenRegistrationStatus.PENDING) {
+                    // A token registration is pending.
+                    // Retry the registration after a connection has been successfully established.
+                    Log.i(TAG, "onNewToken has to be registered using getInstanceId(" + token + ")");
+                }else{
+                    Log.i(TAG, "onNewToken has been initialized(" + token + ")");
+                    pushToken.set(token);
+                }
+
+            }
+        });*/
+
     }
 
     /**
@@ -85,6 +105,7 @@ public class MyFirebaseMessagingService extends SendBirdPushHandler {
         // [END_EXCLUDE]
 
         // TODO(developer): Handle FCM messages here.
+
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
@@ -105,7 +126,8 @@ public class MyFirebaseMessagingService extends SendBirdPushHandler {
                 JSONObject channel = (JSONObject) sendBird.get("channel");
                 channelUrl = (String) channel.get("channel_url");
 
-                SendBird.markAsDelivered(channelUrl);
+
+                //SendBird.markAsDelivered(channelUrl);
                 // Also if you intend on generating your own notifications as a result of a received FCM
                 // message, here is where that should be initiated. See sendNotification method below.
                 sendNotification(context, remoteMessage.getData().get("message"), channelUrl);

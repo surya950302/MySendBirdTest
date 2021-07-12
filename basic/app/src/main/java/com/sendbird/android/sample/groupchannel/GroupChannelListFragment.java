@@ -24,8 +24,13 @@ import com.sendbird.android.GroupChannelListQuery;
 import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
 import com.sendbird.android.sample.R;
+import com.sendbird.android.sample.fcm.MyFirebaseMessagingService;
 import com.sendbird.android.sample.main.ConnectionManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -107,6 +112,9 @@ public class GroupChannelListFragment extends Fragment {
         SendBird.addChannelHandler(CHANNEL_HANDLER_ID, new SendBird.ChannelHandler() {
             @Override
             public void onMessageReceived(BaseChannel baseChannel, BaseMessage baseMessage) {
+                Log.d("hulk","baseMessage");
+                MyFirebaseMessagingService.sendNotification(getContext(), baseMessage.getMessage(), baseChannel.getUrl());
+
             }
 
             @Override
@@ -287,6 +295,10 @@ public class GroupChannelListFragment extends Fragment {
     private void refreshChannelList(int numChannels) {
         mChannelListQuery = GroupChannel.createMyGroupChannelListQuery();
         mChannelListQuery.setLimit(numChannels);
+        // Setting CustomTypesFilter
+        List<String> filterCustomType = new ArrayList<>();
+        filterCustomType.add("Suryanarayan");
+        mChannelListQuery.setCustomTypesFilter(filterCustomType);
 
         mChannelListQuery.next(new GroupChannelListQuery.GroupChannelListQueryResultHandler() {
             @Override

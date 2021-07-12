@@ -172,6 +172,7 @@ public class CreateGroupChannelActivity extends AppCompatActivity
             }
         });
     }*/
+    //creating a new group channel with my firstname as custom type
     private void createGroupChannel(List<String> userIds, boolean distinct){
         GroupChannelParams params = new GroupChannelParams()
                 .addUserIds(userIds)

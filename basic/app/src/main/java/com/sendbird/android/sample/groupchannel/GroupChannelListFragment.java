@@ -298,6 +298,7 @@ public class GroupChannelListFragment extends Fragment {
         // Setting CustomTypesFilter
         List<String> filterCustomType = new ArrayList<>();
         filterCustomType.add("Suryanarayan");
+        filterCustomType.add("B4");
         mChannelListQuery.setCustomTypesFilter(filterCustomType);
 
         mChannelListQuery.next(new GroupChannelListQuery.GroupChannelListQueryResultHandler() {

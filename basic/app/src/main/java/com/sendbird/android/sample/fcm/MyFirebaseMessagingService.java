@@ -62,10 +62,10 @@ public class MyFirebaseMessagingService extends SendBirdPushHandler {
 
     @Override
     public void onNewToken(String token) {
-        Log.i(TAG, "onNewToken(" + token + ")");
-        pushToken.set(token);
+        //Log.i(TAG, "onNewToken(" + token + ")");
+        //pushToken.set(token);
         // Register a registration token to Sendbird server.
-        /*SendBird.registerPushTokenForCurrentUser(token, new SendBird.RegisterPushTokenWithStatusHandler() {
+        SendBird.registerPushTokenForCurrentUser(token, new SendBird.RegisterPushTokenWithStatusHandler() {
             @Override
             public void onRegistered(SendBird.PushTokenRegistrationStatus ptrs, SendBirdException e) {
                 if (e != null) {
@@ -82,7 +82,7 @@ public class MyFirebaseMessagingService extends SendBirdPushHandler {
                 }
 
             }
-        });*/
+        });
 
     }
 
